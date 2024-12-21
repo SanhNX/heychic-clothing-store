@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header"></head>
+<body>
+<div th:replace="adminHome :: navbarAdmin"> </div>
+
+<div class="container page-content">
+  <h2 class="text-center">Category List</h2>
+  <a class="btn btn-primary mb-3" th:href="@{/admin/category/add}">Add New Category</a>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Category Name</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categories}">
+      <td th:text="${category.id}"></td>
+      <td th:text="${category.name}"></td>
+      <td th:text="${category.description}"></td>
+      <td>
+        <a class="btn btn-sm btn-warning" th:href="@{/admin/category/edit/{id}(id=${category.id})}">Edit</a>
+        <a class="btn btn-sm btn-danger" th:href="@{/admin/category/delete/{id}(id=${category.id})}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

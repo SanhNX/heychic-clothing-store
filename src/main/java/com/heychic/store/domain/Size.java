@@ -15,15 +15,15 @@ public class Size implements Comparable<Size> {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="article_id")
-	private Article article;	
+	@JoinColumn(name="product_id")
+	private Product product;
 	private String value;
 		
 	public Size() {}
 	
-	public Size(String value, Article article) {
+	public Size(String value, Product product) {
 		this.value = value;
-		this.article = article;
+		this.product = product;
 	}
 		
 	public Long getId() {
@@ -38,11 +38,11 @@ public class Size implements Comparable<Size> {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public Article getArticle() {
-		return article;
+	public Product getProduct() {
+		return product;
 	}
-	public void setArticle(Article article) {
-		this.article = article;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	@Override

@@ -46,13 +46,13 @@
             <div class="row align-items-center">
         
               <div class="col-4">
-                <a th:href="@{/product-detail?id=}+${cartItem.article.id}"><img class="img-fluid" th:src="'/image/article/pictures/'+${cartItem.article.picture}+'.jpg'" alt="${cartItem.article.title}"></a>
+                <a th:href="@{/product-detail?id=}+${cartItem.product.id}"><img class="img-fluid" th:src="'/image/product/pictures/'+${cartItem.product.picture}+'.jpg'" alt="${cartItem.product.title}"></a>
               </div>
               <div class="col-8">
-                <a th:href="@{/product-detail?id=}+${cartItem.article.id}" class="h6 bold d-inline-block" th:text=${cartItem.article.title}></a>
+                <a th:href="@{/product-detail?id=}+${cartItem.product.id}" class="h6 bold d-inline-block" th:text=${cartItem.product.title}></a>
                   <br>
                   <div><small><b>Size</b>: <span th:text="${cartItem.size}"></span></small></div>                  
-                  <small><b>Giá</b>: <span th:text="${#numbers.formatDecimal(cartItem.article.price, 0, 'COMMA', 2, 'POINT')}"></span> VND</small>
+                  <small><b>Giá</b>: <span th:text="${#numbers.formatDecimal(cartItem.product.price, 0, 'COMMA', 2, 'POINT')}"></span> VND</small>
               </div>
               
             </div>

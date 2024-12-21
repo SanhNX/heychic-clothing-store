@@ -15,17 +15,17 @@ public class Brand {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="article_id")
-	private Article article;
+	@JoinColumn(name="product_id")
+	private Product product;
 	
 	private String name;
 	
 	public Brand() {
 	}
 	
-	public Brand(String name, Article article) {
+	public Brand(String name, Product product) {
 		this.name = name;
-		this.article = article;
+		this.product = product;
 	}
 
 	public Long getId() {
@@ -36,12 +36,12 @@ public class Brand {
 		this.id = id;
 	}
 
-	public Article getArticle() {
-		return article;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setArticle(Article article) {
-		this.article = article;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public String getName() {

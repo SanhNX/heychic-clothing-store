@@ -74,5 +74,15 @@ public class UserServiceImpl implements UserService {
 			return userRepository.save(user);
 		}
 	}
-	
+
+	@Override
+	public List<User> findAll() {
+		return userRepository.findAllByOrderByIdDesc();
+	}
+
+	@Override
+	public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }

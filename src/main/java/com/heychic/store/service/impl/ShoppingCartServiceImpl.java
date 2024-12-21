@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.heychic.store.domain.Article;
+import com.heychic.store.domain.Product;
 import com.heychic.store.domain.CartItem;
 import com.heychic.store.domain.ShoppingCart;
 import com.heychic.store.domain.User;
@@ -39,9 +39,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	@CacheEvict(value = "itemcount", allEntries = true)
-	public CartItem addArticleToShoppingCart(Article article, User user, int qty, String size) {
+	public CartItem addProductToShoppingCart(Product product, User user, int qty, String size) {
 		ShoppingCart shoppingCart = this.getShoppingCart(user);
-		CartItem cartItem = shoppingCart.findCartItemByArticleAndSize(article.getId(), size);
+		CartItem cartItem = shoppingCart.findCartItemByProductAndSize(product.getId(), size);
 		if (cartItem != null && cartItem.hasSameSizeThan(size)) {
 			cartItem.addQuantity(qty);
 			cartItem.setSize(size);
@@ -49,7 +49,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		} else {
 			cartItem = new CartItem();
 			cartItem.setUser(user);
-			cartItem.setArticle(article);
+			cartItem.setProduct(product);
 			cartItem.setQty(qty);
 			cartItem.setSize(size);
 			cartItem = cartItemRepository.save(cartItem);
@@ -68,7 +68,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public void updateCartItem(CartItem cartItem, Integer qty) {
 		if (qty == null || qty <= 0) {
 			this.removeCartItem(cartItem);
-		} else if (cartItem.getArticle().hasStock(qty)) {
+		} else if (cartItem.getProduct().hasStock(qty)) {
 			cartItem.setQty(qty);
 			cartItemRepository.save(cartItem);
 		}

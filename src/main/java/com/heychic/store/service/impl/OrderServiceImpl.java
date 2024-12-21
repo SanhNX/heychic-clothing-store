@@ -10,14 +10,14 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.heychic.store.domain.Article;
+import com.heychic.store.domain.Product;
 import com.heychic.store.domain.CartItem;
 import com.heychic.store.domain.Order;
 import com.heychic.store.domain.Payment;
 import com.heychic.store.domain.Shipping;
 import com.heychic.store.domain.ShoppingCart;
 import com.heychic.store.domain.User;
-import com.heychic.store.repository.ArticleRepository;
+import com.heychic.store.repository.ProductRepository;
 import com.heychic.store.repository.CartItemRepository;
 import com.heychic.store.repository.OrderRepository;
 import com.heychic.store.service.OrderService;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
 	CartItemRepository cartItemRepository;
 	
 	@Autowired
-	ArticleRepository articleRepository;
+	ProductRepository productRepository;
 			
 	@Override
 	@Transactional
@@ -55,9 +55,9 @@ public class OrderServiceImpl implements OrderService {
 		
 		List<CartItem> cartItems = shoppingCart.getCartItems();
 		for (CartItem item : cartItems) {
-			Article article = item.getArticle();
-			article.decreaseStock(item.getQty());
-			articleRepository.save(article);
+			Product product = item.getProduct();
+			product.decreaseStock(item.getQty());
+			productRepository.save(product);
 			item.setOrder(order);
 			cartItemRepository.save(item);
 		}		

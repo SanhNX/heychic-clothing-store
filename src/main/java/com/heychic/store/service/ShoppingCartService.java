@@ -1,6 +1,6 @@
 package com.heychic.store.service;
 
-import com.heychic.store.domain.Article;
+import com.heychic.store.domain.Product;
 import com.heychic.store.domain.CartItem;
 import com.heychic.store.domain.ShoppingCart;
 import com.heychic.store.domain.User;
@@ -14,7 +14,7 @@ public interface ShoppingCartService {
 	
 	CartItem findCartItemById(Long cartItemId);
 	
-	CartItem addArticleToShoppingCart(Article article, User user, int qty, String size);
+	CartItem addProductToShoppingCart(Product product, User user, int qty, String size);
 		
 	void clearShoppingCart(User user);
 	

@@ -114,11 +114,11 @@
           
           <!-- Shop Grid -->          
           <div class="grid grid-gap-3 grid-col-2 grid-col-lg-3 mb-3">
-              <div class="card card-product" th:each="article : ${articles}">
+              <div class="card card-product" th:each="product : ${products}">
                 <div class="card-body">
-                  <a th:href="@{/product-detail?id=}+${article.id}"><img class="card-img-top" th:src="${article.picture} ? '/image/article/pictures/'+${article.picture}+'.jpg' : '/image/article/itemexample.jpg'" alt="Card image cap"></a>
-                  <a th:href="@{/product-detail?id=}+${article.id}" class="card-title" th:text="${article.title}"></a>
-                  <div class="price"><span class="h5" th:text="${#numbers.formatDecimal(article.price, 0, T(Math).round(article.price) == article.price ? 0 : 2)}"> </span> VND</div>
+                  <a th:href="@{/product-detail?id=}+${product.id}"><img class="card-img-top" th:src="${product.picture} ? '/image/product/pictures/'+${product.picture}+'.jpg' : '/image/product/itemexample.jpg'" alt="Card image cap"></a>
+                  <a th:href="@{/product-detail?id=}+${product.id}" class="card-title" th:text="${product.title}"></a>
+                  <div class="price"><span class="h5" th:text="${#numbers.formatDecimal(product.price, 0, T(Math).round(product.price) == product.price ? 0 : 2)}"> </span> VND</div>
                 </div>              
               </div>
           </div>      

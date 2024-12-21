@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+</head>
+
+<body class="d-flex flex-column">
+<div th:fragment="navbarAdmin">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 fixed-top">
+        <a class="navbar-brand" th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">ADMIN DASHBOARD</a>
+        <a class="navbar-brand" th:href="@{/admin}" sec:authorize="hasRole('EMPLOYEE')">EMPLOYEE DASHBOARD</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarCollapse" aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                       role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false"> PRODUCTS </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/admin/product/add}">Add new product</a>
+                        <a class="dropdown-item" th:href="@{/admin/product/product-list}">View product list</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/store}"> BACK TO STORE </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}"> LOG OUT </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="container mt-5 pt-5" sec:authorize="hasRole('EMPLOYEE')">
+    <h1 class="text-center mb-4">Employee Dashboard</h1>
+
+    <!-- Statistics Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">Manage all products in the store.</p>
+                    <a th:href="@{/admin/product/product-list}" class="btn btn-light">View Products</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Catalog</h5>
+                    <p class="card-text">Manage all categories in the store.</p>
+                    <a th:href="@{/admin/category/list}" class="btn btn-light">View Categories</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Sections -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <img th:src="@{/image/product-management-img.jpg}" class="card-img-top" alt="Products Overview">
+                <div class="card-body">
+                    <h5 class="card-title">Product Management</h5>
+                    <p class="card-text">Add, update, or disable products in the catalog.</p>
+                    <a th:href="@{/admin/product/add}" class="btn btn-primary">Add Product</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 pt-5" sec:authorize="hasRole('ADMIN')">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+    <!-- Statistics Section -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">Manage all products in the store.</p>
+                    <a th:href="@{/admin/product/product-list}" class="btn btn-light">View Products</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Catalog</h5>
+                    <p class="card-text">Manage all categories in the store.</p>
+                    <a th:href="@{/admin/category/list}" class="btn btn-light">View Categories</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title">Users</h5>
+                    <p class="card-text">Manage employees accounts</p>
+                    <a th:href="@{/admin/user/list}" class="btn btn-dark">Manage Employees</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Sections -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <img th:src="@{/image/product-management-img.jpg}" class="card-img-top" alt="Products Overview">
+                <div class="card-body">
+                    <h5 class="card-title">Product Management</h5>
+                    <p class="card-text">Add, update, or disable products in the catalog.</p>
+                    <a th:href="@{/admin/product/add}" class="btn btn-primary">Add Product</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <img th:src="@{/image/order-management-img.jpg}" class="card-img-top" alt="Order Overview">
+                <div class="card-body">
+                    <h5 class="card-title">Order Management</h5>
+                    <p class="card-text">View and process customer orders efficiently.</p>
+                    <a th:href="@{/admin/orders}" class="btn btn-success">View Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="common/header :: body-scripts"></div>
+
+</body>
+</html>

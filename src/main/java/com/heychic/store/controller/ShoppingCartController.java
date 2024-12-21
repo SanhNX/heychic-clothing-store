@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.heychic.store.domain.Article;
+import com.heychic.store.domain.Product;
 import com.heychic.store.domain.CartItem;
 import com.heychic.store.domain.ShoppingCart;
 import com.heychic.store.domain.User;
-import com.heychic.store.service.ArticleService;
+import com.heychic.store.service.ProductService;
 import com.heychic.store.service.ShoppingCartService;
 
 @Controller
@@ -21,7 +21,7 @@ import com.heychic.store.service.ShoppingCartService;
 public class ShoppingCartController {
 		
 	@Autowired
-	private ArticleService articleService;
+	private ProductService productService;
 	
 	@Autowired
 	private ShoppingCartService shoppingCartService;
@@ -36,17 +36,17 @@ public class ShoppingCartController {
 	}
 
 	@RequestMapping("/add-item")
-	public String addItem(@ModelAttribute("article") Article article, @RequestParam("qty") String qty,
+	public String addItem(@ModelAttribute("product") Product product, @RequestParam("qty") String qty,
 						  @RequestParam("size") String size, RedirectAttributes attributes, Model model, Authentication authentication) {
-		article = articleService.findArticleById(article.getId());				
-		if (!article.hasStock(Integer.parseInt(qty))) {
+		product = productService.findProductById(product.getId());
+		if (!product.hasStock(Integer.parseInt(qty))) {
 			attributes.addFlashAttribute("notEnoughStock", true);
-			return "redirect:/product-detail?id="+article.getId();
+			return "redirect:/product-detail?id="+ product.getId();
 		}		
 		User user = (User) authentication.getPrincipal();		
-		shoppingCartService.addArticleToShoppingCart(article, user, Integer.parseInt(qty), size);
-		attributes.addFlashAttribute("addArticleSuccess", true);
-		return "redirect:/product-detail?id="+article.getId();
+		shoppingCartService.addProductToShoppingCart(product, user, Integer.parseInt(qty), size);
+		attributes.addFlashAttribute("addProductSuccess", true);
+		return "redirect:/product-detail?id="+ product.getId();
 	}
 	
 	@RequestMapping("/update-item")

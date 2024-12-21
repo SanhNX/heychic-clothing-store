@@ -18,14 +18,14 @@
               role="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false"> PRODUCTS </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" th:href="@{/product/add}">Add new product</a>
-              <a class="dropdown-item" th:href="@{/product/product-list}">View product list</a>
+              <a class="dropdown-item" th:href="@{/admin/product/add}">Add new product</a>
+              <a class="dropdown-item" th:href="@{/admin/product/product-list}">View product list</a>
             </div>
           </li>   
         </ul>
         <ul class="navbar-nav ml-auto">
            <li class="nav-item">
-            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/}"> BACK TO STORE </a>
+            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/store}"> BACK TO STORE </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}"> LOG OUT </a>

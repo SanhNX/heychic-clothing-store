@@ -10,7 +10,7 @@ import com.heychic.store.domain.User;
 
 public interface CartItemRepository extends CrudRepository<CartItem, Long> {
 
-	@EntityGraph(attributePaths = { "article" })
+	@EntityGraph(attributePaths = { "product" })
 	List<CartItem> findAllByUserAndOrderIsNull(User user);
 	
 	void deleteAllByUserAndOrderIsNull(User user);

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: common-header"></head>
+<body>
+<div th:replace="adminHome :: navbarAdmin"> </div>
+
+<div class="container page-content">
+  <h2 class="text-center">Brand List</h2>
+  <a class="btn btn-primary mb-3" th:href="@{/admin/brand/add}">Add New Brand</a>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Brand Name</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="brand : ${brands}">
+      <td th:text="${brand.id}"></td>
+      <td th:text="${brand.name}"></td>
+      <td>
+        <a class="btn btn-sm btn-warning" th:href="@{/admin/brand/edit/{id}(id=${brand.id})}">Edit</a>
+        <a class="btn btn-sm btn-danger" th:href="@{/admin/brand/delete/{id}(id=${brand.id})}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

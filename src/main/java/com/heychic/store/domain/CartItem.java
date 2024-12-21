@@ -21,8 +21,8 @@ public class CartItem {
 	private String size;
 	
 	@OneToOne
-	@JoinColumn(name="article_id")
-	private Article article;
+	@JoinColumn(name="product_id")
+	private Product product;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
@@ -36,11 +36,11 @@ public class CartItem {
 	}
 	
 	public boolean canUpdateQty(Integer qty) {
-		return qty == null || qty <= 0 || this.getArticle().hasStock(qty);
+		return qty == null || qty <= 0 || this.getProduct().hasStock(qty);
 	}
 	
 	public BigDecimal getSubtotal() {
-		return new BigDecimal(article.getPrice()).multiply(new BigDecimal(qty));
+		return new BigDecimal(product.getPrice()).multiply(new BigDecimal(qty));
 	}
 
 	public void addQuantity(int qty) {
@@ -66,11 +66,11 @@ public class CartItem {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	public Article getArticle() {
-		return article;
+	public Product getProduct() {
+		return product;
 	}
-	public void setArticle(Article article) {
-		this.article = article;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public User getUser() {
 		return user;
