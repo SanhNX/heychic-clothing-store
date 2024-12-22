@@ -33,26 +33,28 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	ProductRepository productRepository;
-			
+
 	@Override
 	@Transactional
 	@CacheEvict(value = "itemcount", allEntries = true)
-	public synchronized Order createOrder(ShoppingCart shoppingCart, Shipping shipping, Payment payment, User user) {
+	public synchronized Order createOrder(ShoppingCart shoppingCart, Shipping shipping, Payment payment, User customer, User employee) {
 		Order order = new Order();
-		order.setUser(user);
+		order.setUser(customer); // Customer placing the order
+		order.setEmployee(employee); // Employee handling the order
 		order.setPayment(payment);
 		order.setShipping(shipping);
 		order.setOrderTotal(shoppingCart.getGrandTotal());
 		shipping.setOrder(order);
-		payment.setOrder(order);			
+		payment.setOrder(order);
+
 		LocalDate today = LocalDate.now();
-		LocalDate estimatedDeliveryDate = today.plusDays(5);				
+		LocalDate estimatedDeliveryDate = today.plusDays(5);
 		order.setOrderDate(Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		order.setShippingDate(Date.from(estimatedDeliveryDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		order.setOrderStatus("In Progress");
-		
+
 		order = orderRepository.save(order);
-		
+
 		List<CartItem> cartItems = shoppingCart.getCartItems();
 		for (CartItem item : cartItems) {
 			Product product = item.getProduct();
@@ -60,10 +62,11 @@ public class OrderServiceImpl implements OrderService {
 			productRepository.save(product);
 			item.setOrder(order);
 			cartItemRepository.save(item);
-		}		
-		return order;	
+		}
+
+		return order;
 	}
-	
+
 	@Override
 	public Order findOrderWithDetails(Long id) {
 		return orderRepository.findEagerById(id);

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/header :: common-header"></head>
+<html lang="en" xmlns:th="http://www.w3.org./1999/xhtml" xmlns:sec="http://www.w3.org./1999/xhtml">
+<head th:replace="common/header :: common-header" />
 <body>
-<div class="container mt-5">
+
+<div th:replace="admin/adminHome :: navbarAdmin"> </div>
+
+<div class="container page-content">
   <h2 class="text-center">Add New User</h2>
   <form th:action="@{/admin/user/add}" method="post">
     <div class="form-group">
@@ -16,7 +19,7 @@
     <div class="form-group">
       <label for="role">Role</label>
       <select class="form-control" id="role" name="role" required>
-        <option value="ROLE_USER">User</option>
+        <option value="ROLE_USER">Customer</option>
         <option value="ROLE_ADMIN">Admin</option>
         <option value="ROLE_EMPLOYEE">Employee</option>
       </select>
@@ -25,5 +28,9 @@
     <a class="btn btn-secondary" th:href="@{/admin/user/list}">Cancel</a>
   </form>
 </div>
+
+<div th:replace="common/header :: body-scripts"> </div>
+<script src="/js/tagsinput-custom.js"></script>
+
 </body>
 </html>

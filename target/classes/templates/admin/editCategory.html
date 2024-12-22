@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/header :: common-header"></head>
 <body>
-<div class="container mt-5">
+<div th:replace="admin/adminHome :: navbarAdmin"> </div>
+
+<div class="container page-content">
   <h2 class="text-center">Edit Category</h2>
   <form th:action="@{/admin/category/edit}" method="post">
     <input type="hidden" name="id" th:value="${category.id}">
@@ -18,5 +20,9 @@
     <a class="btn btn-secondary" th:href="@{/admin/category/list}">Cancel</a>
   </form>
 </div>
+
+<div th:replace="common/header :: body-scripts"> </div>
+<script src="/js/tagsinput-custom.js"></script>
+
 </body>
 </html>

@@ -10,8 +10,8 @@ import com.heychic.store.domain.User;
 
 public interface OrderService {
 
-	Order createOrder(ShoppingCart shoppingCart, Shipping shippingAddress, Payment payment, User user);
-	
+	Order createOrder(ShoppingCart shoppingCart, Shipping shippingAddress, Payment payment, User customer, User employee);
+
 	List<Order> findByUser(User user);
 	
 	Order findOrderWithDetails(Long id);

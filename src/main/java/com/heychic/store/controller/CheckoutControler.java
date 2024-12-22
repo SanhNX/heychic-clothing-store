@@ -61,20 +61,13 @@ public class CheckoutControler {
 							 RedirectAttributes redirectAttributes, Authentication authentication) {
 
 		User user = (User) authentication.getPrincipal();
-		User customer;
-
-		// If customerId is provided, use it to fetch the customer, otherwise use the logged-in user
-		if (customerId != null) {
-			customer = userService.findById(customerId);
-		} else {
-			customer = user;
-		}
+		User customer = customerId != null ? userService.findById(customerId) : user;
 
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(user);
 
 		if (!shoppingCart.isEmpty()) {
 			shipping.setAddress(address);
-			Order order = orderService.createOrder(shoppingCart, shipping, payment, customer);
+			Order order = orderService.createOrder(shoppingCart, shipping, payment, customer, customerId != null ? user : null);
 			redirectAttributes.addFlashAttribute("order", order);
 		}
 		return "redirect:/order-submitted";

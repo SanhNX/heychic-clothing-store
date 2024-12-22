@@ -2,33 +2,43 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/header :: common-header"></head>
 <body>
-<div th:replace="adminHome :: navbarAdmin"> </div>
+<div th:replace="admin/adminHome :: navbarAdmin"> </div>
 
 <div class="container page-content">
-  <h2 class="text-center">User List</h2>
+  <h2 class="text-center">Employee List</h2>
   <a class="btn btn-primary mb-3" th:href="@{/admin/user/add}">Add New User</a>
+  <p class="text-info">Total Revenue: <strong th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 2, 'POINT')}"></strong> VND</p>
   <table class="table table-bordered">
     <thead>
     <tr>
       <th>ID</th>
-      <th>Username</th>
+      <th>Employee Name</th>
       <th>Email</th>
+      <th>Revenue</th>
       <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${users}" th:if="${user.email != 'admin@admin.com'}">
-      <td th:text="${user.id}"></td>
-      <td th:text="${user.username}"></td>
-      <td th:text="${user.email}"></td>
+    <tr th:each="employee : ${employees}" th:if="${employee.email != 'admin@admin.com'}">
+      <td th:text="${employee.id}"></td>
+      <td th:text="${employee.username}"></td>
+      <td th:text="${employee.email}"></td>
       <td>
-        <a class="btn btn-sm btn-warning" th:href="@{/admin/user/edit/{id}(id=${user.id})}">Edit</a>
-        <a class="btn btn-sm btn-danger" th:href="@{/admin/user/delete/{id}(id=${user.id})}">Delete</a>
+          <span th:text="${#numbers.formatDecimal(employeeRevenue[employee.id], 0, 'COMMA', 2, 'POINT')} + ' VND'"
+                th:classappend="${employeeRevenue[employee.id] > 10000} ? 'text-success' : ''"></span>
+      </td>
+      <td>
+        <a class="btn btn-sm btn-warning" th:href="@{/admin/user/edit/{id}(id=${employee.id})}">Edit</a>
+<!--        <a class="btn btn-sm btn-danger" th:href="@{/admin/user/delete/{id}(id=${employee.id})}">Delete</a>-->
       </td>
     </tr>
     </tbody>
 
   </table>
 </div>
+
+<div th:replace="common/header :: body-scripts"> </div>
+<script src="/js/tagsinput-custom.js"></script>
+
 </body>
 </html>

@@ -1,7 +1,9 @@
 package com.heychic.store.controller;
 
 import com.heychic.store.domain.Category;
+import com.heychic.store.repository.ProductRepository;
 import com.heychic.store.service.CategoryService;
+import com.heychic.store.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +16,12 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/list")
     public String listCategories(Model model) {
-        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("categories", productService.getAllCategories());
         return "admin/categoryList";
     }
 

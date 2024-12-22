@@ -3,9 +3,10 @@
 <head th:replace="common/header :: common-header" />
 <body>
 
-  <div th:replace="adminHome :: navbarAdmin"> </div>
+<div th:replace="admin/adminHome :: navbarAdmin"> </div>
 
-  <div class="container page-content">
+<div class="container page-content">
+  <a class="btn btn-primary mb-3" th:href="@{/admin/product/add}">Add New Product</a>
     <table id="table-product" class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
       <tr>
@@ -30,7 +31,7 @@
         <td th:text="${product.price}"></td>
         <td th:text="${product.stock}"></td>
         <td><a th:href="@{/admin/product/edit?id=}+${product.id}" class="badge badge-primary">EDIT</a>
-            <a th:href="@{/admin/product/delete?id=}+${product.id}" class="badge badge-danger">DELETE </a> </td>
+            <a th:href="@{/admin/product/disable?id=}+${product.id}" class="badge badge-warning">DISABLE </a> </td>
       </tr>
     </tbody>
   </table>

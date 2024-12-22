@@ -23,6 +23,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" th:href="@{/admin/product/add}">Add new product</a>
                         <a class="dropdown-item" th:href="@{/admin/product/product-list}">View product list</a>
+                        <a class="dropdown-item" th:href="@{/admin/user/add}">Add new User</a>
+                        <a class="dropdown-item" th:href="@{/admin/user/list}">View User list</a>
                     </div>
                 </li>
             </ul>
@@ -39,7 +41,7 @@
 </div>
 
 <div class="container mt-5 pt-5" sec:authorize="hasRole('EMPLOYEE')">
-    <h1 class="text-center mb-4">Employee Dashboard</h1>
+    <h1 class="text-center mb-4">Employee Dashboard (<span class="text-success">Total Revenue: <strong th:text="${#numbers.formatDecimal(revenue, 0, 'COMMA', 2, 'POINT')}"></strong> VND</span>)</h1>
 
     <!-- Statistics Section -->
     <div class="row mb-4">

@@ -1,11 +1,16 @@
 package com.heychic.store.controller;
 
 import com.heychic.store.domain.User;
+import com.heychic.store.repository.OrderRepository;
 import com.heychic.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/user")
@@ -14,10 +19,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
     // List all users
     @GetMapping("/list")
     public String listUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
+        List<User> employees = userService.findAllByRoleId(3);
+        Map<Long, Double> employeeRevenue = new HashMap<>();
+        double totalRevenue = 0.0;
+
+        for (User employee : employees) {
+            Double revenue = orderRepository.calculateRevenueByEmployee(employee.getId());
+            revenue = (revenue != null) ? revenue : 0.0;
+            employeeRevenue.put(employee.getId(), revenue);
+            totalRevenue += revenue; // Add revenue to total
+        }
+
+        model.addAttribute("employeeRevenue", employeeRevenue);
+        model.addAttribute("totalRevenue", totalRevenue); // Pass total revenue to the view
+        model.addAttribute("employees", employees);
         return "admin/userList";
     }
 
