@@ -1,5 +1,6 @@
 package com.heychic.store.controller;
 
+import com.heychic.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -28,38 +29,57 @@ public class CheckoutControler {
 	@Autowired
 	private OrderService orderService;
 
+	@Autowired
+	private UserService userService;
+
 	@RequestMapping("/checkout")
-	public String checkout( @RequestParam(value="missingRequiredField", required=false) boolean missingRequiredField,
-							Model model, Authentication authentication) {		
-		User user = (User) authentication.getPrincipal();	
+	public String checkout(@RequestParam(value = "missingRequiredField", required = false) boolean missingRequiredField,
+						   Model model, Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(user);
-		if(shoppingCart.isEmpty()) {
+		if (shoppingCart.isEmpty()) {
 			model.addAttribute("emptyCart", true);
 			return "redirect:/shopping-cart/cart";
-		}						
+		}
 		model.addAttribute("cartItemList", shoppingCart.getCartItems());
 		model.addAttribute("shoppingCart", shoppingCart);
-		if(missingRequiredField) {
+
+		// Add all customers for employee selection
+		model.addAttribute("customerList", userService.findAllByRoleId(1));
+
+		if (missingRequiredField) {
 			model.addAttribute("missingRequiredField", true);
-		}		
-		return "checkout";		
+		}
+		return "checkout";
 	}
-	
+
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
 	public String placeOrder(@ModelAttribute("shipping") Shipping shipping,
-							@ModelAttribute("address") Address address,
-							@ModelAttribute("payment") Payment payment,
-							RedirectAttributes redirectAttributes, Authentication authentication) {		
-		User user = (User) authentication.getPrincipal();		
-		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(user);	
+							 @ModelAttribute("address") Address address,
+							 @ModelAttribute("payment") Payment payment,
+							 @RequestParam(value = "customerCheckout", required = false) Long customerId,
+							 RedirectAttributes redirectAttributes, Authentication authentication) {
+
+		User user = (User) authentication.getPrincipal();
+		User customer;
+
+		// If customerId is provided, use it to fetch the customer, otherwise use the logged-in user
+		if (customerId != null) {
+			customer = userService.findById(customerId);
+		} else {
+			customer = user;
+		}
+
+		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(user);
+
 		if (!shoppingCart.isEmpty()) {
 			shipping.setAddress(address);
-			Order order = orderService.createOrder(shoppingCart, shipping, payment, user);		
+			Order order = orderService.createOrder(shoppingCart, shipping, payment, customer);
 			redirectAttributes.addFlashAttribute("order", order);
 		}
 		return "redirect:/order-submitted";
 	}
-	
+
 	@RequestMapping(value = "/order-submitted", method = RequestMethod.GET)
 	public String orderSubmitted(Model model) {
 		Order order = (Order) model.asMap().get("order");
@@ -67,7 +87,7 @@ public class CheckoutControler {
 			return "redirect:/";
 		}
 		model.addAttribute("order", order);
-		return "orderSubmitted";	
+		return "orderSubmitted";
 	}
 
 }

@@ -18,4 +18,6 @@ public interface UserService {
 	User createUser(String username, String email,  String password, List<String> roles);
 	List<User> findAll();
 	void deleteById(Long id);
+
+	List<User> findAllByRoleId(Integer id);
 }
