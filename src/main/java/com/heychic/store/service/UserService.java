@@ -15,7 +15,7 @@ public interface UserService {
 	User findByUsername(String username);
 	User findByEmail(String email);
 	void save(User user);
-	User createUser(String username, String email,  String password, List<String> roles);
+	User createUser(String username, String password,  String email, List<String> roles);
 	List<User> findAll();
 	void deleteById(Long id);
 
